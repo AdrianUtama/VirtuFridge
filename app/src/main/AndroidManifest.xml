@@ -16,7 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomePage"></activity>
+        <activity android:name=".HomePage" />
+        <activity
+            android:name=".ShoppingList"
+            android:label="@string/title_activity_shopping_list"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>
