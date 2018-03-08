@@ -30,7 +30,7 @@ public class ShoppingList extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 String key = myRef.child("ShoppingList").push().getKey();
-                myRef.child("ShoppingList").child(key).setValue("Carrots");
+                myRef.child("ShoppingList").child(key).setValue("Apples");
             }
         });
     }

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "786304746400",
+    "firebase_url": "https://virtufridge-dede9.firebaseio.com",
+    "project_id": "virtufridge-dede9",
+    "storage_bucket": "virtufridge-dede9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786304746400:android:ba4befa5be8510cd",
+        "android_client_info": {
+          "package_name": "virtufridge.virtufridge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "786304746400-rfmu3ttjhap0nm1kgd8pcon5en451an8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "virtufridge.virtufridge",
+            "certificate_hash": "2811c493e5b6b7b4b0e5c32bf5f67780c5aff9b5"
+          }
+        },
+        {
+          "client_id": "786304746400-6qh3jkav4k6ccv3tok57og7l2drenlgc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCRzfUqDWKuxTGxllHGm4-YRDihEJQmUw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "786304746400-6qh3jkav4k6ccv3tok57og7l2drenlgc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
