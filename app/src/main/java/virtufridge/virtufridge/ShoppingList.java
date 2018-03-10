@@ -39,12 +39,10 @@ public class ShoppingList extends AppCompatActivity {
             public void onClick(View view) {
                 String key = myRef.child("ShoppingList").push().getKey();
                 myRef.child(key).setValue("Apples");
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
 
             }
         });
-
         //Creates a list view of all items for the customer to read from the database and
         listview=(ListView)findViewById(R.id.listView);
         final ArrayAdapter<String> adapter=new ArrayAdapter<>(this,android.R.layout.simple_dropdown_item_1line,list);
