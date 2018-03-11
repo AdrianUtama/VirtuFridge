@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="16dp"
-        android:text="Button"
+        android:text="My Shopping List"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageView3" />
@@ -29,7 +29,7 @@
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="Button"
+        android:text="My VirtuFridge"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/button" />
@@ -38,7 +38,7 @@
         android:id="@+id/button3"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="Button"
+        android:text="Stores near me"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/button2"/>
