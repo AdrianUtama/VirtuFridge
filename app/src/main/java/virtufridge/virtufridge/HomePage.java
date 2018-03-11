@@ -23,5 +23,25 @@ public class HomePage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button b2 = (Button)findViewById(R.id.button2);
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), VirtuPage.class);
+                //intent.putExtra("key", theString);
+                startActivity(intent);
+            }
+        });
+
+        Button b3 = (Button)findViewById(R.id.button3);
+        b3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), LocationPage.class);
+                //intent.putExtra("key", theString);
+                startActivity(intent);
+            }
+        });
     }
 }
