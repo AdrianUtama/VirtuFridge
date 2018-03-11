@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:padding="30dp"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/nameTitleFood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter the Name of Item"
+        android:textAlignment="center"
+        android:ems="10"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/itemName"
+        android:layout_width="279dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:hint="Item Name"
+
+        android:inputType="textPersonName"
+        android:textAlignment="center" />
+
+    <Button
+        android:id="@+id/enterItemButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
+</LinearLayout>

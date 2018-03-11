@@ -9,11 +9,11 @@
     <ListView
         android:id="@+id/listView"
         android:layout_width="383dp"
+        layout="@layout/content_shopping_list"
         android:layout_height="504dp"
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="left|bottom"
         tools:layout_editor_absoluteY="63dp" />
-    <include
 
     <TextView
         android:layout_width="match_parent"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@android:color/grey"
+        app:backgroundTint="@android:color/white"
         app:srcCompat="@drawable/ic_shoppingcartadd" />
 
 </android.support.design.widget.CoordinatorLayout>
