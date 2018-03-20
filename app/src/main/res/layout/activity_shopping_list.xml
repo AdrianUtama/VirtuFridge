@@ -15,14 +15,6 @@
         app:layout_anchorGravity="left|bottom"
         tools:layout_editor_absoluteY="63dp" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="62dp"
-        android:fontFamily="serif"
-        android:padding="10dp"
-        android:text="Shopping List"
-        android:textSize="30sp" />
-
     <include
         android:id="@+id/include"
         layout="@layout/content_shopping_list"

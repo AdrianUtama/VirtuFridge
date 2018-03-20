@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,20 +21,28 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ShoppingList extends AppCompatActivity {
+    /*TODO: Data Format for Each User:
+        ShoppingList
+            |
+            |___Key 1: Item 1
+            |___Key 2: Item 2
+    */
     //Trial Push Edit 2
     ArrayList<String> list=new ArrayList<>();
+    final HashMap<String, String> itemKeyMap = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list);
-        ListView listview;
+        final ListView listview;
+        final ArrayAdapter<String> adapter=new ArrayAdapter<>(this,android.R.layout.simple_dropdown_item_1line,list);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("ShoppingList");
-
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -48,13 +58,29 @@ public class ShoppingList extends AppCompatActivity {
                     public void onClick(View view) {
                         if(!shoppingItem.getText().toString().isEmpty()){
                             //Check to see if item has already been added
-                            DatabaseReference root = FirebaseDatabase.getInstance().getReference("ShoppingList");
+                            DatabaseReference root = FirebaseDatabase.getInstance().getReference();
                             DatabaseReference users = root.child("ShoppingList");
+
                             users.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot snapshot) {
-                                    if (snapshot.child("ShoppingList").child(shoppingItem.getText().toString()).exists()) {
-                                        Toast.makeText(ShoppingList.this, "Item is already in your list", Toast.LENGTH_SHORT).show();
+//                                    Log.d("Entering Shit", "Entering the twilight zone");
+//                                    Log.d("Entering Shit", snapshot.getKey().toString());
+                                    Boolean foundData = false;
+                                    for(DataSnapshot key: snapshot.getChildren()){
+                                        Log.d("Key",key.getValue().toString());
+                                        Log.d("Item",key.getKey().toString());
+                                        itemKeyMap.put(key.getValue().toString(), key.getKey().toString());
+//                                        Log.d("Stupid Fuck", "Here is the fucking key");
+//                                        Log.d("Stupid Fuck", key.getValue().toString());
+//                                        Log.d("Stupid Fuck", "Here is the string for shopping item");
+//                                        Log.d("Stupid Fuck", shoppingItem.getText().toString());
+                                        if (key.getValue().equals(shoppingItem.getText().toString())){
+                                            foundData = true;
+                                            }
+                                    }
+                                    if (foundData) {
+                                        Toast.makeText(ShoppingList.this, "Item already exists", Toast.LENGTH_SHORT).show();
                                     }else{
                                         String key = myRef.child("ShoppingList").push().getKey();
                                         myRef.child(key).setValue(shoppingItem.getText().toString());
@@ -79,7 +105,57 @@ public class ShoppingList extends AppCompatActivity {
         });
         //Creates a list view of all items for the customer to read from the database and display
         listview=(ListView)findViewById(R.id.listView);
-        final ArrayAdapter<String> adapter=new ArrayAdapter<>(this,android.R.layout.simple_dropdown_item_1line,list);
+        listview.setClickable(true);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("Stupid Fuck", "Inside On ListView Click");
+                Object itemElement = listview.getItemAtPosition(position);
+                String itemElementString =(String)itemElement;//As you are using Default String Adapter
+                Log.d("Stupid Fuck", itemElementString);
+                Log.d("TESTING FUCKING KEY", itemKeyMap.get(itemElementString));
+                myRef.child("ShoppingList").child(itemKeyMap.get(itemElementString)).removeValue();
+                adapter.notifyDataSetChanged();
+                //new code below
+
+
+            }
+        });
+//        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+//                Object listViewElement = listview.getItemAtPosition(position);
+//                final String elementString =(String)listViewElement;//As you are using Default String Adapter
+//                DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+//                final DatabaseReference users = root.child("ShoppingList");
+////                users.addListenerForSingleValueEvent(new ValueEventListener() {
+////                    @Override
+////                    public void onDataChange(DataSnapshot snapshot) {
+//////                                    Log.d("Entering Shit", "Entering the twilight zone");
+//////                                    Log.d("Entering Shit", snapshot.getKey().toString());
+////                        Boolean foundData = false;
+////                        for(DataSnapshot key: snapshot.getChildren()){
+//////                                        Log.d("Stupid Fuck", "Here is the fucking key");
+//////                                        Log.d("Stupid Fuck", key.getValue().toString());
+//////                                        Log.d("Stupid Fuck", "Here is the string for shopping item");
+//////                                        Log.d("Stupid Fuck", shoppingItem.getText().toString());
+////                            if (key.getValue().equals(elementString)){
+////                                users.child(key.toString()).removeValue();
+////                            }
+////                        }
+////                    }
+////                    @Override
+////                    public void onCancelled(DatabaseError databaseError) {
+////
+////                    }
+////                });
+//
+//                Log.d("Stupid Delete Shit", "Item was fucking clicked");
+//                Log.d("Stupid Delete Shit", elementString);
+//            }
+//        });
+
         listview.setAdapter(adapter);
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
