@@ -32,14 +32,17 @@ public class ShoppingList extends AppCompatActivity {
     */
     //Trial Push Edit 2
     ArrayList<String> list=new ArrayList<>();
+    ArrayList<String> keylist = new ArrayList<>();
     final HashMap<String, String> itemKeyMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list);
         final ListView listview;
         final ArrayAdapter<String> adapter=new ArrayAdapter<>(this,android.R.layout.simple_dropdown_item_1line,list);
+        adapter.notifyDataSetChanged();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("ShoppingList");
@@ -84,7 +87,9 @@ public class ShoppingList extends AppCompatActivity {
                                     }else{
                                         String key = myRef.child("ShoppingList").push().getKey();
                                         myRef.child(key).setValue(shoppingItem.getText().toString());
+                                        shoppingItem.getText().clear();
                                         Toast.makeText(ShoppingList.this, "Item added to your list", Toast.LENGTH_SHORT).show();
+
                                     }
                                 }
                                 @Override
@@ -108,19 +113,26 @@ public class ShoppingList extends AppCompatActivity {
         listview.setClickable(true);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("Stupid Fuck", "Inside On ListView Click");
-                Object itemElement = listview.getItemAtPosition(position);
-                String itemElementString =(String)itemElement;//As you are using Default String Adapter
-                Log.d("Stupid Fuck", itemElementString);
-                Log.d("TESTING FUCKING KEY", itemKeyMap.get(itemElementString));
-                myRef.child("ShoppingList").child(itemKeyMap.get(itemElementString)).removeValue();
-                adapter.notifyDataSetChanged();
-                //new code below
-
-
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                String key = keylist.get(position);
+                myRef.child(key).removeValue();
             }
         });
+//        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Log.d("Stupid Fuck", "Inside On ListView Click");
+//                Object itemElement = listview.getItemAtPosition(position);
+//                String itemElementString =(String)itemElement;//As you are using Default String Adapter
+//                Log.d("Stupid Fuck", itemElementString);
+//                Log.d("TESTING FUCKING KEY", itemKeyMap.get(itemElementString));
+//                myRef.child("ShoppingList").child(itemKeyMap.get(itemElementString)).removeValue();
+//                adapter.notifyDataSetChanged();
+//                //new code below
+//
+//
+//            }
+//        });
 //        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //
 //            @Override
@@ -165,6 +177,7 @@ public class ShoppingList extends AppCompatActivity {
 
                 String shoppingItem = dataSnapshot.getValue(String.class);
                 list.add(shoppingItem);
+                keylist.add(dataSnapshot.getKey());
                 adapter.notifyDataSetChanged();
             }
             @Override
@@ -177,6 +190,7 @@ public class ShoppingList extends AppCompatActivity {
                 for (int i = 0; i < adapter.getCount(); i++) {
                     if(adapter.getItem(i).equals(shoppingItem)) {
                         adapter.remove(adapter.getItem(i));
+                        keylist.remove(dataSnapshot.getKey());
                         break;
 
                     }
