@@ -8,28 +8,51 @@
 
     <ListView
         android:id="@+id/listView"
-        android:layout_width="383dp"
+        android:layout_width="match_parent"
         layout="@layout/content_shopping_list"
-        android:layout_height="504dp"
+        android:layout_height="wrap_content"
         app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="left|bottom"
-        tools:layout_editor_absoluteY="63dp" />
+        app:layout_anchorGravity="left|bottom" />
 
     <include
         android:id="@+id/include"
         layout="@layout/content_shopping_list"
-        android:layout_height="632dp"
-        android:layout_width="match_parent"
-        tools:layout_editor_absoluteY="-65dp" />
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
 
-<android.support.design.widget.FloatingActionButton
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="160dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:visibility="invisible"
+        app:backgroundTint="@color/virtuFridge"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@drawable/ic_done" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="90dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:visibility="invisible"
+        app:elevation="6dp"
+        app:backgroundTint="@color/virtuFridge"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@drawable/ic_shoppingcartadd" />
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="#DFDEDF"
-        app:srcCompat="@drawable/ic_shoppingcartadd" />
-
+        app:backgroundTint="@color/virtuFridge"
+        app:srcCompat="@drawable/ic_add_circle" />
 
 </android.support.design.widget.CoordinatorLayout>

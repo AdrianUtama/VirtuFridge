@@ -6,4 +6,5 @@
     <color name="virtuFridge">#DFDEDF</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="virtuFridgeShade">#C8C7C8</color>
 </resources>

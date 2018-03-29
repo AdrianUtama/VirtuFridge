@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -23,7 +25,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ShoppingList extends AppCompatActivity {
+
+public class ShoppingList extends AppCompatActivity{
+    private Boolean isFabOpen = false;
+    private FloatingActionButton fab,fab2,fab3;
+    private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     /*TODO: Data Format for Each User:
         ShoppingList
             |
@@ -34,6 +40,31 @@ public class ShoppingList extends AppCompatActivity {
     ArrayList<String> list=new ArrayList<>();
     ArrayList<String> keylist = new ArrayList<>();
     final HashMap<String, String> itemKeyMap = new HashMap<>();
+
+    public void animateFAB(){
+
+        if(isFabOpen){
+
+            fab.startAnimation(rotate_backward);
+            fab2.startAnimation(fab_close);
+            fab3.startAnimation(fab_close);
+            fab2.setClickable(false);
+            fab3.setClickable(false);
+            isFabOpen = false;
+            Log.d("Raj", "close");
+
+        } else {
+
+            fab.startAnimation(rotate_forward);
+            fab2.startAnimation(fab_open);
+            fab3.startAnimation(fab_open);
+            fab2.setClickable(true);
+            fab3.setClickable(true);
+            isFabOpen = true;
+            Log.d("Raj","open");
+
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +78,29 @@ public class ShoppingList extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("ShoppingList");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab2 = (FloatingActionButton) findViewById(R.id.fab2);
+        fab3 = (FloatingActionButton) findViewById(R.id.fab3);
+        fab_open = AnimationUtils.loadAnimation(this, R.layout.fab_open);
+        fab_close = AnimationUtils.loadAnimation(this,R.layout.fab_close);
+        rotate_forward = AnimationUtils.loadAnimation(this,R.layout.rotate_forward);
+        rotate_backward = AnimationUtils.loadAnimation(this,R.layout.rotate_backward);
+
         fab.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               animateFAB();
+           }
+        });
+
+        fab3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(ShoppingList.this);
@@ -205,5 +257,4 @@ public class ShoppingList extends AppCompatActivity {
             }
         });
     }
-
 }
