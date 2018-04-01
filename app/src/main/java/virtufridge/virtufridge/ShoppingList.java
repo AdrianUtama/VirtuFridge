@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -30,6 +31,7 @@ public class ShoppingList extends AppCompatActivity{
     private Boolean isFabOpen = false;
     private FloatingActionButton fab,fab2,fab3;
     private Animation fab_open,fab_close,rotate_forward,rotate_backward;
+    private TextView tv_complete, tv_add;
     /*TODO: Data Format for Each User:
         ShoppingList
             |
@@ -50,8 +52,11 @@ public class ShoppingList extends AppCompatActivity{
             fab3.startAnimation(fab_close);
             fab2.setClickable(false);
             fab3.setClickable(false);
+            tv_add.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+            tv_complete.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+            tv_complete.setVisibility(View.GONE);
+            tv_add.setVisibility(View.GONE);
             isFabOpen = false;
-            Log.d("Raj", "close");
 
         } else {
 
@@ -60,8 +65,11 @@ public class ShoppingList extends AppCompatActivity{
             fab3.startAnimation(fab_open);
             fab2.setClickable(true);
             fab3.setClickable(true);
+            tv_add.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
+            tv_complete.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
+            tv_complete.setVisibility(View.VISIBLE);
+            tv_add.setVisibility(View.VISIBLE);
             isFabOpen = true;
-            Log.d("Raj","open");
 
         }
     }
@@ -77,6 +85,9 @@ public class ShoppingList extends AppCompatActivity{
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("ShoppingList");
+
+        tv_add = (TextView) findViewById(R.id.textView_add);
+        tv_complete = (TextView) findViewById(R.id.textView_complete);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab2 = (FloatingActionButton) findViewById(R.id.fab2);
