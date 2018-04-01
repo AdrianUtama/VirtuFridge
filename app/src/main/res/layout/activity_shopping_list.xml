@@ -12,7 +12,7 @@
         layout="@layout/content_shopping_list"
         android:layout_height="wrap_content"
         app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="left|bottom" />
+        app:layout_anchorGravity="left|top" />
 
     <include
         android:id="@+id/include"
@@ -28,7 +28,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginRight="@dimen/fab_margin"
         android:visibility="invisible"
-        app:backgroundTint="@color/virtuFridge"
+        app:backgroundTint="@color/virtuFridgeShade"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"
         app:srcCompat="@drawable/ic_done" />
@@ -42,7 +42,7 @@
         android:layout_marginRight="@dimen/fab_margin"
         android:visibility="invisible"
         app:elevation="6dp"
-        app:backgroundTint="@color/virtuFridge"
+        app:backgroundTint="@color/virtuFridgeShade"
         app:pressedTranslationZ="12dp"
         app:srcCompat="@drawable/ic_shoppingcartadd" />
 
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@color/virtuFridge"
-        app:srcCompat="@drawable/ic_add_circle" />
+        app:backgroundTint="@color/virtuFridgeShade"
+        app:srcCompat="@drawable/ic_add" />
 
 </android.support.design.widget.CoordinatorLayout>
