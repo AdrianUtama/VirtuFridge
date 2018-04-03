@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="virtufridge.virtufridge">
 
     <!--
@@ -8,6 +9,11 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -27,12 +33,10 @@
         </activity>
         <activity
             android:name=".HomePage"
-            android:theme="@style/AppThemeNoActionBar" >
-        </activity>
+            android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".ShoppingList"
-            android:label="My Shopping List">
-        </activity>
+            android:label="My Shopping List" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -45,13 +49,21 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <meta-data
+            tools:replace="android:value"
+            android:name="android.support.VERSION"
+            android:value="26.0.1" />
+
         <activity
             android:name=".LocationPage"
             android:label="@string/title_activity_location_page" />
         <activity
             android:name=".VirtuPage"
-            android:label="My VirtuFridge">
-        </activity>
+            android:label="My VirtuFridge" />
+        <activity
+            android:name=".LoginPage"
+            android:label="@string/title_activity_login_page" />
+        <activity android:name=".TestPage"></activity>
     </application>
 
 </manifest>

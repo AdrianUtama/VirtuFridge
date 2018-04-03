@@ -6,8 +6,16 @@ import android.widget.*;
 import android.view.View;
 import android.content.Intent;
 
+import com.firebase.ui.auth.AuthUI;
+
+import java.util.Arrays;
+import java.util.List;
+
 
 public class HomePage extends AppCompatActivity {
+    private static final int RC_SIGN_IN = 123;
+    List<AuthUI.IdpConfig> providers = Arrays.asList(
+            new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +47,32 @@ public class HomePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), LocationPage.class);
+                //intent.putExtra("key", theString);
+                startActivity(intent);
+            }
+        });
+
+        Button b4 = (Button)findViewById(R.id.button4);
+        b4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(
+                        AuthUI.getInstance()
+                                .createSignInIntentBuilder()
+                                .setAvailableProviders(providers)
+                                .build(),
+                        RC_SIGN_IN);
+//                Intent intent = new Intent(v.getContext(), LoginPage.class);
+                //intent.putExtra("key", theString);
+//                startActivity(intent);
+            }
+        });
+
+        Button b5 = (Button)findViewById(R.id.button5);
+        b5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), TestPage.class);
                 //intent.putExtra("key", theString);
                 startActivity(intent);
             }
