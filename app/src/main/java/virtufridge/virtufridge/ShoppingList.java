@@ -1,5 +1,6 @@
 package virtufridge.virtufridge;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -133,7 +134,56 @@ public class ShoppingList extends AppCompatActivity{
         fab3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(ShoppingList.this);
+                View fillableView = getLayoutInflater().inflate(R.layout.shopping_list_verify_complete, null);
+                Button button_yes = (Button) fillableView.findViewById(R.id.button_yes);
+                Button button_no = (Button) fillableView.findViewById(R.id.button_no);
 
+                mBuilder.setView(fillableView);
+                final AlertDialog alert = mBuilder.create();
+                alert.show();
+
+                button_yes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.cancel();
+                        final AlertDialog.Builder mBuilder = new AlertDialog.Builder(ShoppingList.this);
+                        View fillableView = getLayoutInflater().inflate(R.layout.shopping_list_add_expiration, null);
+                        Button button_yes = (Button) fillableView.findViewById(R.id.button_yes2);
+                        Button button_no = (Button) fillableView.findViewById(R.id.button_no2);
+
+                        mBuilder.setView(fillableView);
+                        final AlertDialog alert = mBuilder.create();
+                        alert.show();
+
+                        button_yes.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                alert.cancel();
+                                Intent intent = new Intent(view.getContext(), VirtuPage.class);
+                                //intent.putExtra("key", theString);
+                                startActivity(intent);
+                            }
+                        });
+
+                        button_no.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                alert.cancel();
+                                Intent intent = new Intent(view.getContext(), VirtuPage.class);
+                                //intent.putExtra("key", theString);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                });
+
+                button_no.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alert.cancel();
+                    }
+                });
             }
         });
 

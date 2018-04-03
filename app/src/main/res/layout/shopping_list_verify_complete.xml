@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/nameTitleFood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Do you wish to proceed?"
+        android:textAlignment="center"
+        android:ems="10"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_margin="5dp"/>
+
+    <Button
+        android:id="@+id/button_yes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Yes"
+        android:layout_margin="5dp"
+        android:background="@drawable/rounded_button" />
+
+    <Button
+        android:id="@+id/button_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button"
+        android:layout_margin="5dp"
+        android:text="No" />
+
+
+</LinearLayout>
