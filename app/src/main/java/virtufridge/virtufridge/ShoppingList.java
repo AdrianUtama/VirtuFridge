@@ -131,6 +131,7 @@ public class ShoppingList extends AppCompatActivity{
            }
         });
 
+        final String finalCurrentUserId1 = currentUserId;
         fab3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -170,7 +171,13 @@ public class ShoppingList extends AppCompatActivity{
                             @Override
                             public void onClick(View view) {
                                 alert.cancel();
+                                DatabaseReference root = FirebaseDatabase.getInstance().getReference().child(finalCurrentUserId1);
+                                root.child("AllItems").setValue(list);
+                                DatabaseReference users = root.child("VirtuFridge");
                                 Intent intent = new Intent(view.getContext(), VirtuPage.class);
+                                for (int itemIndex = 0; itemIndex < keylist.size(); itemIndex++){
+                                    users.child(keylist.get(itemIndex)).setValue(list.get(itemIndex));
+                                }
                                 //intent.putExtra("key", theString);
                                 startActivity(intent);
                             }
@@ -187,7 +194,6 @@ public class ShoppingList extends AppCompatActivity{
             }
         });
 
-        final String finalCurrentUserId1 = currentUserId;
         final String finalCurrentUserId2 = currentUserId;
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -261,55 +267,6 @@ public class ShoppingList extends AppCompatActivity{
                 myRef.child("ShoppingList").child(key).removeValue();
             }
         });
-//        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Log.d("Stupid Fuck", "Inside On ListView Click");
-//                Object itemElement = listview.getItemAtPosition(position);
-//                String itemElementString =(String)itemElement;//As you are using Default String Adapter
-//                Log.d("Stupid Fuck", itemElementString);
-//                Log.d("TESTING FUCKING KEY", itemKeyMap.get(itemElementString));
-//                myRef.child("ShoppingList").child(itemKeyMap.get(itemElementString)).removeValue();
-//                adapter.notifyDataSetChanged();
-//                //new code below
-//
-//
-//            }
-//        });
-//        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-//                Object listViewElement = listview.getItemAtPosition(position);
-//                final String elementString =(String)listViewElement;//As you are using Default String Adapter
-//                DatabaseReference root = FirebaseDatabase.getInstance().getReference();
-//                final DatabaseReference users = root.child("ShoppingList");
-////                users.addListenerForSingleValueEvent(new ValueEventListener() {
-////                    @Override
-////                    public void onDataChange(DataSnapshot snapshot) {
-//////                                    Log.d("Entering Shit", "Entering the twilight zone");
-//////                                    Log.d("Entering Shit", snapshot.getKey().toString());
-////                        Boolean foundData = false;
-////                        for(DataSnapshot key: snapshot.getChildren()){
-//////                                        Log.d("Stupid Fuck", "Here is the fucking key");
-//////                                        Log.d("Stupid Fuck", key.getValue().toString());
-//////                                        Log.d("Stupid Fuck", "Here is the string for shopping item");
-//////                                        Log.d("Stupid Fuck", shoppingItem.getText().toString());
-////                            if (key.getValue().equals(elementString)){
-////                                users.child(key.toString()).removeValue();
-////                            }
-////                        }
-////                    }
-////                    @Override
-////                    public void onCancelled(DatabaseError databaseError) {
-////
-////                    }
-////                });
-//
-//                Log.d("Stupid Delete Shit", "Item was fucking clicked");
-//                Log.d("Stupid Delete Shit", elementString);
-//            }
-//        });
 
         listview.setAdapter(adapter);
         final String finalCurrentUserId = currentUserId;

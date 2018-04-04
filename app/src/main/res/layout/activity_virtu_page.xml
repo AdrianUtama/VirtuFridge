@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context="virtufridge.virtufridge.VirtuPage">
 
+    <ListView
+        android:id="@+id/listView2"
+        android:layout_width="match_parent"
+        layout="@layout/content_virtu_page"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="left|top" />
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_virtu_page"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab3"
         android:layout_width="wrap_content"
