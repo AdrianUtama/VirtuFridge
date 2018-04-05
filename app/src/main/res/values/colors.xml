@@ -8,4 +8,5 @@
     <color name="black">#000000</color>
     <color name="virtuFridgeShade">#C8C7C8</color>
     <color name="success_green">#20D420</color>
+    <color name="virtuFridgeBlue">#2024E2</color>
 </resources>

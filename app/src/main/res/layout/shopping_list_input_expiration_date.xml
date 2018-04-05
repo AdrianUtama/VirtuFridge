@@ -5,25 +5,22 @@
     android:layout_height="match_parent">
 
 
-    <EditText
-        android:id="@+id/itemName"
-        android:layout_width="279dp"
+    <TextView
+        android:id="@+id/textDate"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:ems="10"
-        android:hint="Item Name"
         android:layout_margin="5dp"
-        android:inputType="textPersonName"
-        android:backgroundTint="@color/virtuFridgeBlue"
-        android:textCursorDrawable="@drawable/color_cursor"
+        android:text="date"
+        android:textSize="20dp"
         android:textAlignment="center" />
 
     <Button
-        android:id="@+id/enterItemButton"
+        android:id="@+id/button_expiration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_button"
         android:layout_margin="5dp"
-        android:text="Add" />
+        android:text="Submit" />
 
 </LinearLayout>

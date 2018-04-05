@@ -1,5 +1,6 @@
 package virtufridge.virtufridge;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -54,6 +57,9 @@ public class ShoppingList extends AppCompatActivity{
     List<AuthUI.IdpConfig> providers = Arrays.asList(
             new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build());
 
+    TextView tv_date;
+    Calendar mCurrentDate;
+    int day, month, year;
 
     public void animateFAB(){
 
@@ -161,9 +167,39 @@ public class ShoppingList extends AppCompatActivity{
                             @Override
                             public void onClick(View view) {
                                 alert.cancel();
-                                Intent intent = new Intent(view.getContext(), VirtuPage.class);
-                                //intent.putExtra("key", theString);
-                                startActivity(intent);
+
+
+                                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(ShoppingList.this);
+                                View fillableView = getLayoutInflater().inflate(R.layout.shopping_list_input_expiration_date, null);
+                                Button button_expiration = (Button) fillableView.findViewById(R.id.button_expiration);
+
+                                tv_date = (TextView) fillableView.findViewById(R.id.textDate);
+                                mCurrentDate = Calendar.getInstance();
+
+                                day = mCurrentDate.get(Calendar.DAY_OF_MONTH);
+                                month = mCurrentDate.get(Calendar.MONTH);
+                                year = mCurrentDate.get(Calendar.YEAR);
+
+
+                                tv_date.setText(Integer.toString(month+1)+"/"+Integer.toString(day)+"/"+Integer.toString(year));
+
+                                mBuilder.setView(fillableView);
+                                final AlertDialog alert = mBuilder.create();
+                                alert.show();
+
+                                tv_date.setOnClickListener(new View.OnClickListener(){
+                                    @Override
+                                    public void onClick(View v) {
+                                        DatePickerDialog datePickerDialog = new DatePickerDialog(ShoppingList.this, new DatePickerDialog.OnDateSetListener() {
+                                            @Override
+                                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                                monthOfYear += 1;
+                                                tv_date.setText(Integer.toString(monthOfYear)+"/"+Integer.toString(dayOfMonth)+"/"+Integer.toString(year));
+                                            }
+                                        }, year, month, day);
+                                        datePickerDialog.show();
+                                    }
+                                });
                             }
                         });
 
