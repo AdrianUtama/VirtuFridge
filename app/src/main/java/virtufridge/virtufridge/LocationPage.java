@@ -26,6 +26,8 @@ public class LocationPage extends FragmentActivity implements OnMapReadyCallback
 
     LocationManager locationManager;
 
+    boolean locationListened = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +60,12 @@ public class LocationPage extends FragmentActivity implements OnMapReadyCallback
                         String str = addressList.get(0).getLocality()+",";
                         str += addressList.get(0).getCountryName();
                        // mMap.addMarker(new MarkerOptions().position(latLng).title(str));
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10.2f));
+
+                        if(locationListened == false) {
+
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                            locationListened = true;
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -94,8 +101,14 @@ public class LocationPage extends FragmentActivity implements OnMapReadyCallback
                         List<Address> addressList = geocoder.getFromLocation(latitude, longitude, 1);
                         String str = addressList.get(0).getLocality()+",";
                         str += addressList.get(0).getCountryName();
-                        mMap.addMarker(new MarkerOptions().position(latLng).title(str));
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10.2f));
+                        //mMap.addMarker(new MarkerOptions().position(latLng).title(str));
+
+
+                        if(locationListened == false) {
+
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                            locationListened = true;
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -143,7 +156,9 @@ public class LocationPage extends FragmentActivity implements OnMapReadyCallback
         //LatLng sydney = new LatLng(-34, 151);
         //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 10.2f));
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //LatLng sydney = new LatLng(-34, 151);
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.animateCamera( CameraUpdateFactory.zoomTo( 17.0f ) );
+
     }
 }
