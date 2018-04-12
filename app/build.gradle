@@ -3,6 +3,9 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
+        multiDexEnabled true
+    }
+    defaultConfig {
         applicationId "virtufridge.virtufridge"
         minSdkVersion 21
         targetSdkVersion 26
