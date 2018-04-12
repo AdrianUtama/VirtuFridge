@@ -6,6 +6,14 @@
 
 
     <TextView
+        android:id="@+id/itemForExpiration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="trial"
+        android:textAlignment="center"
+        android:textSize="20sp" />
+
+    <TextView
         android:id="@+id/textDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,8 +27,8 @@
         android:id="@+id/button_expiration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_button"
         android:layout_margin="5dp"
+        android:background="@drawable/rounded_button"
         android:text="Submit" />
 
 </LinearLayout>

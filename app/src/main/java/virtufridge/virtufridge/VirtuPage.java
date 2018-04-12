@@ -28,8 +28,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class VirtuPage extends AppCompatActivity {
     private Boolean isFabOpen = false;
@@ -45,6 +47,7 @@ public class VirtuPage extends AppCompatActivity {
     DatabaseReference users = root.child("VirtuFridge");
     ArrayList<String> itemlist=new ArrayList<>();
     ArrayList<String> keylist = new ArrayList<>();
+    Calendar currentCal = Calendar.getInstance();
 
 
     public void animateFAB(){
@@ -83,6 +86,8 @@ public class VirtuPage extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_virtu_page);
+
+        currentCal.getTime().setMonth(currentCal.getTime().getMonth()+1);
 
         tv_add = (TextView) findViewById(R.id.textView_add);
         tv_complete = (TextView) findViewById(R.id.textView_complete);
@@ -147,6 +152,31 @@ public class VirtuPage extends AppCompatActivity {
 //                    Log.d("Item Name", key.getValue().toString());
                     if(!itemlist.contains(key.getValue().toString())){
                         Log.d("Put in item", key.getValue().toString());
+                        Log.d("Type of Value", (key.child("Expiration Date").getValue().getClass().getName()));
+                        HashMap<String, HashMap> tempHashMap = (HashMap)key.child("Expiration Date").getValue();
+                        Log.d("HashMap Greg Type", tempHashMap.get("time").getClass().getName());
+                        HashMap<String, Long> timeHashMap = tempHashMap.get("time");
+                        Log.d("timehash Month", Long.toString(timeHashMap.get("month")));
+                        Log.d("timehash Day", Long.toString(timeHashMap.get("date")));
+                        Log.d("timeHash Year", Long.toString(timeHashMap.get("year")));
+                        Calendar itemCal = Calendar.getInstance();
+                        long tempmonth = timeHashMap.get("month");
+                        long tempdate = timeHashMap.get("date");
+                        long tempyear = timeHashMap.get("year");
+                        itemCal.getTime().setMonth((int)tempmonth);
+                        itemCal.getTime().setDate((int)tempdate);
+                        itemCal.getTime().setYear((int)tempyear);
+
+                        Log.d("currCal Month", Long.toString(currentCal.getTime().getMonth()));
+                        Log.d("currCal Day", Long.toString(currentCal.getTime().getDate()));
+                        Log.d("currCal Year", Long.toString(currentCal.getTime().getYear()));
+                        if(tempmonth == currentCal.getTime().getMonth()){
+                            long dayDifference = tempdate - currentCal.getTime().getDate();
+                            Log.d("# of Day Difference", Long.toString(dayDifference));
+                            if(dayDifference <= 5){
+                                Toast.makeText(VirtuPage.this, "Item " + key.child("Item Name").getValue(String.class) + " is about to expire", Toast.LENGTH_SHORT).show();
+                            }
+                        }
 //                        itemlist.add(key.getValue().toString());
                         keylist.add(key.getKey());
                     }
@@ -165,6 +195,7 @@ public class VirtuPage extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String key = keylist.get(position);
                 root.child(currentUserId).child("VirtuFridge").child(key).removeValue();
+
             }
         });
 
@@ -183,8 +214,8 @@ public class VirtuPage extends AppCompatActivity {
                 //DataSnapshot userDataSnapshot = dataSnapshot.child(finalCurrentUserId);
                 String key = dataSnapshot.getKey();
                 Log.d("Key Name", key);
-                Log.d("Item Name", dataSnapshot.getValue(String.class));
-                String shoppingItem = dataSnapshot.getValue(String.class);
+                Log.d("Item Name", dataSnapshot.child("Item Name").getValue(String.class));
+                String shoppingItem = dataSnapshot.child("Item Name").getValue(String.class);
                 itemlist.add(shoppingItem);
                 //                for (String value : list){
                 //                    Log.d("Items inside list", "Value is " + value);
@@ -199,7 +230,7 @@ public class VirtuPage extends AppCompatActivity {
             }
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                String shoppingItem = dataSnapshot.getValue(String.class);
+                String shoppingItem = dataSnapshot.child("Item Name").getValue(String.class);
                 Log.d("Trying to delete item: ", shoppingItem);
                 for (int i = 0; i < adapter.getCount(); i++) {
                     if(adapter.getItem(i).equals(shoppingItem)) {
