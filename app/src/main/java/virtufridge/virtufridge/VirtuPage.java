@@ -153,9 +153,9 @@ public class VirtuPage extends AppCompatActivity {
                     if(!itemlist.contains(key.getValue().toString())){
                         Log.d("Put in item", key.getValue().toString());
                         Log.d("Type of Value", (key.child("Expiration Date").getValue().getClass().getName()));
-                        HashMap<String, HashMap> tempHashMap = (HashMap)key.child("Expiration Date").getValue();
-                        Log.d("HashMap Greg Type", tempHashMap.get("time").getClass().getName());
-                        HashMap<String, Long> timeHashMap = tempHashMap.get("time");
+//                        HashMap<String, HashMap> tempHashMap = (HashMap)key.child("Expiration Date").getValue();
+//                        Log.d("HashMap Greg Type", tempHashMap.get("time").getClass().getName());
+                        HashMap<String, Long> timeHashMap = (HashMap)key.child("Expiration Date").getValue();
                         Log.d("timehash Month", Long.toString(timeHashMap.get("month")));
                         Log.d("timehash Day", Long.toString(timeHashMap.get("date")));
                         Log.d("timeHash Year", Long.toString(timeHashMap.get("year")));
