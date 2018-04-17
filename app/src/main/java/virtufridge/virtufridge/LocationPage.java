@@ -80,13 +80,13 @@ public class LocationPage extends FragmentActivity implements OnMapReadyCallback
 
                     case R.id.action_grocery:
                         nearByPlace("supermarket");
-                        nearByPlace("HEB");
+                        nearByPlace("grocery");
                         break;
                     case R.id.action_cstore:
-                        nearByPlace("gas station");
+                        nearByPlace("convenience store");
                         break;
                     case R.id.action_gstation:
-                        nearByPlace("convenience store");
+                        nearByPlace("gas station");
                         break;
                     default:
                         break;
