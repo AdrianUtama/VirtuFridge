@@ -51,6 +51,8 @@ public class LocationPage extends FragmentActivity implements OnMapReadyCallback
     private Marker mMarker;
     private LocationRequest mLocationRequest;
 
+    boolean locationHasChanged = false;
+
     IGoogleAPIService mService;
 
     @Override
@@ -75,17 +77,16 @@ public class LocationPage extends FragmentActivity implements OnMapReadyCallback
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.action_hospital:
-                        nearByPlace("hospital");
+
+                    case R.id.action_grocery:
+                        nearByPlace("supermarket");
+                        nearByPlace("grocery");
                         break;
-                    case R.id.action_market:
-                        nearByPlace("market");
+                    case R.id.action_cstore:
+                        nearByPlace("convenience store");
                         break;
-                    case R.id.action_restaurant:
-                        nearByPlace("reaturant");
-                        break;
-                    case R.id.action_school:
-                        nearByPlace("school");
+                    case R.id.action_gstation:
+                        nearByPlace("gas station");
                         break;
                     default:
                         break;
@@ -115,23 +116,21 @@ public class LocationPage extends FragmentActivity implements OnMapReadyCallback
                                 LatLng latLng = new LatLng(lat,lng);
                                 markerOptions.position(latLng);
                                 markerOptions.title(placeName);
-                                if (placeType.equals("hospital"))
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                                else if (placeType.equals("market"))
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-                                else if (placeType.equals("restaurant"))
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
-                                else if (placeType.equals("school"))
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-                                else
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                                //if (placeType.equals("supermarket"))
+                                //    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                                //else if (placeType.equals("convenience_store"))
+                                //    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                                //else if (placeType.equals("gas_station"))
+                                //    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                                //else
+                                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
 
                                 //Add to map
                                 mMap.addMarker(markerOptions);
 
                                 //Move camera
-                                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                                mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+                                //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                                mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
                             }
                         }
                     }
@@ -149,7 +148,7 @@ public class LocationPage extends FragmentActivity implements OnMapReadyCallback
         StringBuilder googlePlaceUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
         googlePlaceUrl.append("location="+lattitude+","+longitude);
         googlePlaceUrl.append("&radius="+10000);
-        googlePlaceUrl.append("&type="+placeType);
+        googlePlaceUrl.append("&keyword="+placeType);
         googlePlaceUrl.append("&sensor=true");
         googlePlaceUrl.append("&key="+getResources().getString(R.string.browser_key));
         Log.d("getUrl",googlePlaceUrl.toString());
@@ -267,9 +266,14 @@ public class LocationPage extends FragmentActivity implements OnMapReadyCallback
         mMarker = mMap.addMarker(markerOptions);
 
 
-        //Move Camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomBy(11));
+        if(locationHasChanged == false) {
+            //Move Camera
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            mMap.animateCamera(CameraUpdateFactory.zoomBy(13));
+            mMarker.remove();
+            locationHasChanged = true;
+        }
+
 
         if (mGoogleApiClient != null)
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);

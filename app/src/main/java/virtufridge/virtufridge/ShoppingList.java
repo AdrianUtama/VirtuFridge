@@ -29,11 +29,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -101,9 +99,6 @@ public class ShoppingList extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list);
 
-        GregorianCalendar trial = new GregorianCalendar(2018,11-1,25);
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyy");
-        Log.d("Date: ", sdf.format(trial.getTime()));
         String currentUserId = "";
         if(currentUser != null){
             currentUserId = currentUser.getUid();
@@ -185,12 +180,12 @@ public class ShoppingList extends AppCompatActivity{
                                 mCurrentDate = Calendar.getInstance();
 
                                 day = mCurrentDate.get(Calendar.DAY_OF_MONTH);
-                                month = mCurrentDate.get(Calendar.MONTH) + 1;
+                                month = mCurrentDate.get(Calendar.MONTH);
                                 year = mCurrentDate.get(Calendar.YEAR);
 
 
 
-                                tv_date.setText(Integer.toString(month)+"/"+Integer.toString(day)+"/"+Integer.toString(year));
+                                tv_date.setText(Integer.toString(month + 1)+"/"+Integer.toString(day)+"/"+Integer.toString(year));
 
                                 for(String item : list){
                                     Log.d("ItemListItem:",item);
@@ -246,7 +241,7 @@ public class ShoppingList extends AppCompatActivity{
                                                                 //myRef.child("ShoppingList").child(item.getKey()).child("Expiration Date").setValue(cal.getTime());
                                                                 Log.d("Adding Expiration", "True");
                                                                 myRef.child("VirtuFridge").child(item.getKey()).child("Item Name").setValue(tempItemList.get(0));
-                                                                myRef.child("VirtuFridge").child(item.getKey()).child("Expiration Date").setValue(cal);
+                                                                myRef.child("VirtuFridge").child(item.getKey()).child("Expiration Date").setValue(cal.getTime());
                                                                 myRef.child("ShoppingList").child(item.getKey()).removeValue();
                                                                 Toast.makeText(ShoppingList.this, "Item moved to VirtuFridge", Toast.LENGTH_SHORT).show();
                                                                 tempItemList.remove(tempItemList.get(0));
@@ -330,8 +325,8 @@ public class ShoppingList extends AppCompatActivity{
                                         DatePickerDialog datePickerDialog = new DatePickerDialog(ShoppingList.this, new DatePickerDialog.OnDateSetListener() {
                                             @Override
                                             public void onDateSet(DatePicker view, int yearOfYear, int monthOfYear, int dayOfMonth) {
-                                                monthOfYear += 1;
-                                                tv_date.setText(Integer.toString(monthOfYear)+"/"+Integer.toString(dayOfMonth)+"/"+Integer.toString(yearOfYear));
+
+                                                tv_date.setText(Integer.toString(monthOfYear + 1)+"/"+Integer.toString(dayOfMonth)+"/"+Integer.toString(yearOfYear));
                                                 day = dayOfMonth;
                                                 month = monthOfYear;
                                                 year = yearOfYear;
