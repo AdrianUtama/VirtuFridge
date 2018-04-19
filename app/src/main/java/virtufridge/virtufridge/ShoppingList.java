@@ -105,12 +105,8 @@ public class ShoppingList extends AppCompatActivity{
             Log.d("Fucking Log In", currentUser.getUid());
         }
         else{
-            startActivityForResult(
-                    AuthUI.getInstance()
-                            .createSignInIntentBuilder()
-                            .setAvailableProviders(providers)
-                            .build(),
-                    RC_SIGN_IN);
+            Intent intent = new Intent(this, LoginPage.class);
+            startActivity(intent);
         }
         final ListView listview;
         final ArrayAdapter<String> adapter=new ArrayAdapter<>(this,android.R.layout.simple_dropdown_item_1line,list);

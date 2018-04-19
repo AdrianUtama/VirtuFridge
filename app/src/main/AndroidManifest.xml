@@ -63,7 +63,8 @@
             android:label="My VirtuFridge" />
         <activity
             android:name=".LoginPage"
-            android:label="@string/title_activity_login_page" />
+            android:theme="@style/AppThemeNoActionBar"
+            android:label="Welcome to VirtuFridge" />
         <activity android:name=".TestPage"></activity>
     </application>
 

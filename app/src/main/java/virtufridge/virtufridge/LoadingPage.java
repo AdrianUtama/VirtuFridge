@@ -20,7 +20,7 @@ public class LoadingPage extends AppCompatActivity {
                 } catch (Exception e) {
 
                 } finally {
-                    Intent i = new Intent(LoadingPage.this, HomePage.class);
+                    Intent i = new Intent(LoadingPage.this, LoginPage.class);
                     startActivity(i);
                     finish();
                 }

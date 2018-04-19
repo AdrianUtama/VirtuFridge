@@ -51,31 +51,5 @@ public class HomePage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        Button b4 = (Button)findViewById(R.id.button4);
-        b4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(
-                        AuthUI.getInstance()
-                                .createSignInIntentBuilder()
-                                .setAvailableProviders(providers)
-                                .build(),
-                        RC_SIGN_IN);
-//                Intent intent = new Intent(v.getContext(), LoginPage.class);
-                //intent.putExtra("key", theString);
-//                startActivity(intent);
-            }
-        });
-
-        Button b5 = (Button)findViewById(R.id.button5);
-        b5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), TestPage.class);
-                //intent.putExtra("key", theString);
-                startActivity(intent);
-            }
-        });
     }
 }
