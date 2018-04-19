@@ -160,23 +160,57 @@ public class VirtuPage extends AppCompatActivity {
                         Log.d("timehash Day", Long.toString(timeHashMap.get("date")));
                         Log.d("timeHash Year", Long.toString(timeHashMap.get("year")));
                         Calendar itemCal = Calendar.getInstance();
-                        long tempmonth = timeHashMap.get("month");
+                        long tempmonth = timeHashMap.get("month") + 1;
                         long tempdate = timeHashMap.get("date");
                         long tempyear = timeHashMap.get("year");
-                        itemCal.getTime().setMonth((int)tempmonth);
+                        itemCal.getTime().setMonth((int)tempmonth + 1);
                         itemCal.getTime().setDate((int)tempdate);
                         itemCal.getTime().setYear((int)tempyear);
 
                         Log.d("currCal Month", Long.toString(currentCal.getTime().getMonth()));
                         Log.d("currCal Day", Long.toString(currentCal.getTime().getDate()));
                         Log.d("currCal Year", Long.toString(currentCal.getTime().getYear()));
-                        if(tempmonth == currentCal.getTime().getMonth()){
-                            long dayDifference = tempdate - currentCal.getTime().getDate();
-                            Log.d("# of Day Difference", Long.toString(dayDifference));
-                            if(dayDifference <= 5){
-                                Toast.makeText(VirtuPage.this, "Item " + key.child("Item Name").getValue(String.class) + " is about to expire", Toast.LENGTH_SHORT).show();
+                        long currmonth = currentCal.getTime().getMonth();
+                        long currdate = currentCal.getTime().getDate();
+                        long curryear = currentCal.getTime().getYear();
+
+                        Log.d("Difference Months: ", Long.toString(tempmonth - currmonth));
+                        Log.d("Difference Days: ", Long.toString(tempdate - currdate));
+                        Log.d("Difference Years: ", Long.toString(tempyear - curryear));
+                        //currentCal.compareTo (itemCal)
+                        if(tempyear - curryear >= 0){
+                            //Not Expired
+                            Log.d("Not Expired Year", "True");
+                            if(tempmonth - currmonth < 0){
+                                //Expired
+                                Log.d("Expired Month", "True");
+                                Toast.makeText(VirtuPage.this, "Item " + key.child("Item Name").getValue(String.class) + " expired", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                //Not Expired
+                                if(tempdate - currdate <= 5 && tempdate - currdate > -1){
+                                    //Print Toast Message Warning
+                                    Log.d("Not Expired Date", "True");
+                                    Toast.makeText(VirtuPage.this, "Item " + key.child("Item Name").getValue(String.class) + " is about to expire", Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    Log.d("Expired Date", "True");
+                                    Toast.makeText(VirtuPage.this, "Item " + key.child("Item Name").getValue(String.class) + " expired", Toast.LENGTH_SHORT).show();
+                                }
+
                             }
                         }
+                        else{
+                            //Expired
+                            Toast.makeText(VirtuPage.this, "Item " + key.child("Item Name").getValue(String.class) + " Expired", Toast.LENGTH_SHORT).show();
+                        }
+//                        if(tempmonth == currentCal.getTime().getMonth()){
+//                            long dayDifference = tempdate - currentCal.getTime().getDate();
+//                            Log.d("# of Day Difference", Long.toString(dayDifference));
+//                            if(dayDifference <= 5){
+//                                Toast.makeText(VirtuPage.this, "Item " + key.child("Item Name").getValue(String.class) + " is about to expire", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
 //                        itemlist.add(key.getValue().toString());
                         keylist.add(key.getKey());
                     }
