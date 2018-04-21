@@ -24,6 +24,7 @@ import java.util.List;
 
 public class LoginPage extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     List<AuthUI.IdpConfig> providers = Arrays.asList(
             new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build());
 
@@ -34,6 +35,8 @@ public class LoginPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
 
+        AuthUI.getInstance()
+                .signOut(this);
 
         Button b1 = (Button) findViewById(R.id.button1);
         b1.setOnClickListener(new View.OnClickListener() {
@@ -52,12 +55,18 @@ public class LoginPage extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         // Check which request we're responding to
         if (requestCode == RC_SIGN_IN) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-                Intent intent = new Intent(this, HomePage.class);
-                startActivity(intent);
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null) {
+                    Intent intent = new Intent(this, HomePage.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         }
     }

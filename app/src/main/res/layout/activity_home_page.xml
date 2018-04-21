@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:text="Stores near me"
         android:background="@drawable/rounded_button"
-        android:drawableLeft="@drawable/placeholder"
+        android:drawableLeft="@drawable/map"
         android:padding="10dp"
         app:layout_constraintDimensionRatio="5"
         app:layout_constraintLeft_toLeftOf="parent"
