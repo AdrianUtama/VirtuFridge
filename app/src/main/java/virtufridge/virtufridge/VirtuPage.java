@@ -228,8 +228,10 @@ public class VirtuPage extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String key = keylist.get(position);
+                itemlist.remove(position);
+                Log.d("Key Removed onItemClick", key);
                 root.child(currentUserId).child("VirtuFridge").child(key).removeValue();
-
+                adapter.notifyDataSetChanged();
             }
         });
 
@@ -268,9 +270,9 @@ public class VirtuPage extends AppCompatActivity {
                 Log.d("Trying to delete item: ", shoppingItem);
                 for (int i = 0; i < adapter.getCount(); i++) {
                     if(adapter.getItem(i).equals(shoppingItem)) {
-                        adapter.remove(adapter.getItem(i));
+                        //adapter.remove(adapter.getItem(i));
                         keylist.remove(dataSnapshot.getKey());
-                        itemlist.remove(shoppingItem);
+                        //itemlist.remove(shoppingItem);
                         break;
 
                     }
