@@ -473,15 +473,15 @@ public class ShoppingList extends AppCompatActivity{
                             @Override
                             public void onClick(View view) {
                                 alert.cancel();
-                                DatabaseReference root = FirebaseDatabase.getInstance().getReference().child(finalCurrentUserId1);
-                                root.child("AllItems").setValue(list);
-                                DatabaseReference users = root.child("VirtuFridge");
-                                Intent intent = new Intent(view.getContext(), VirtuPage.class);
-                                for (int itemIndex = 0; itemIndex < keylist.size(); itemIndex++){
-                                    users.child(keylist.get(itemIndex)).setValue(list.get(itemIndex));
-                                }
-                                //intent.putExtra("key", theString);
-                                startActivity(intent);
+//                                DatabaseReference root = FirebaseDatabase.getInstance().getReference().child(finalCurrentUserId1);
+//                                root.child("AllItems").setValue(list);
+//                                DatabaseReference users = root.child("VirtuFridge");
+//                                Intent intent = new Intent(view.getContext(), VirtuPage.class);
+//                                for (int itemIndex = 0; itemIndex < keylist.size(); itemIndex++){
+//                                    users.child(keylist.get(itemIndex)).setValue(list.get(itemIndex));
+//                                }
+//                                //intent.putExtra("key", theString);
+//                                startActivity(intent);
                             }
                         });
                     }
@@ -545,6 +545,7 @@ public class ShoppingList extends AppCompatActivity{
                                         String key = myRef.child("ShoppingList").push().getKey();
                                         myRef.child("ShoppingList").child(key).child("Item Name").setValue(shoppingItem.getText().toString());
                                         shoppingItem.getText().clear();
+                                        shoppingItem.setText("");
                                         Toast.makeText(ShoppingList.this, "Item added to your list", Toast.LENGTH_SHORT).show();
 
                                     }
