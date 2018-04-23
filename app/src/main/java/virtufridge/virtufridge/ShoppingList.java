@@ -127,8 +127,16 @@ public class ShoppingList extends AppCompatActivity{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child("NumberOfVisits").getValue() != null){
                     long totalTrips = (long) dataSnapshot.child("NumberOfVisits").getValue();
+                    Log.d("Number of Trips", Long.toString(totalTrips));
+                    Log.d("Inside this Recommender", "Recommendation");
                     for(DataSnapshot item : dataSnapshot.child("Item Freq").getChildren()){
-                        if(((long)item.getValue() / totalTrips) >= 0.5){
+                        Log.d("Item Name Freq", item.getKey().toString());
+                        Log.d("Item Freq Purchase", item.getValue().toString());
+                        long itemValue = (long)item.getValue();
+                        Log.d("Division", Float.toString(((float) itemValue/ totalTrips)));
+
+                        if(((float) itemValue/ totalTrips) >= 0.5){
+                            Log.d("Item that worked", item.getKey().toString());
                             Toast.makeText(ShoppingList.this, "You should buy " + item.getKey(), Toast.LENGTH_SHORT).show();
                             recommendedItems.add(item.getKey());
 //                        formattedRecommendedItems = formattedRecommendedItems + item.getKey().toString() +  ", ";
@@ -301,20 +309,27 @@ public class ShoppingList extends AppCompatActivity{
                                                                 @Override
                                                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                                                     boolean foundData = false;
+                                                                    int count = 0;
                                                                     Log.d("Item Freq Datasnapshot", dataSnapshot.getKey().toString());
                                                                     for (DataSnapshot item : dataSnapshot.getChildren()){
                                                                         Log.d("Item Freq Key" ,item.getKey().toString());
                                                                         if(itemForFreq.equals(item.getKey().toString().toLowerCase())){
                                                                             foundData = true;
+
+                                                                            myRef.child("Item Freq").child(itemForFreq).setValue((long)(item.getValue()) + 1);
+
                                                                         }
 
 
                                                                     }
 
                                                                     if (foundData) {
-                                                                        long currentFreqCount = itemFreqCountList.get(itemForFreq);
-                                                                        itemFreqCountList.put(itemForFreq,currentFreqCount + 1);
-                                                                        myRef.child("Item Freq").child(itemForFreq).setValue(currentFreqCount + 1);
+//                                                                        long currentFreqCount = itemFreqCountList.get(itemForFreq);
+//                                                                        itemFreqCountList.put(itemForFreq,currentFreqCount + 1);
+//                                                                        for (DataSnapshot item : dataSnapshot.getChildren()){
+//
+//                                                                        }
+
                                                                     }
                                                                     else{
                                                                         myRef.child("Item Freq").child(itemForFreq).setValue(1);
