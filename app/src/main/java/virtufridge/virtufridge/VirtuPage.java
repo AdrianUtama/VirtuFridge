@@ -139,7 +139,7 @@ public class VirtuPage extends AppCompatActivity {
 
 
         final ListView listview;
-        final ArrayAdapter<String> adapter=new ArrayAdapter<>(this,android.R.layout.simple_dropdown_item_1line,itemlist);
+        final ArrayAdapter<String> adapter=new ArrayAdapter<>(this,R.layout.mytextview,itemlist);
         listview=(ListView)findViewById(R.id.listView2);
 
         DatabaseReference userItems = root.child(currentUserId).child("VirtuFridge");
@@ -252,7 +252,12 @@ public class VirtuPage extends AppCompatActivity {
                 Log.d("Key Name", key);
                 Log.d("Item Name", dataSnapshot.child("Item Name").getValue(String.class));
                 String shoppingItem = dataSnapshot.child("Item Name").getValue(String.class);
-                itemlist.add(shoppingItem);
+                HashMap<String, Long> timeHashMap = (HashMap)dataSnapshot.child("Expiration Date").getValue();
+                String month = Long.toString(timeHashMap.get("month")+1);
+                String day =  Long.toString(timeHashMap.get("date"));
+                String year =  Long.toString(timeHashMap.get("year")-100);
+                String expirationDate = month+"/"+day+"/"+year;
+                itemlist.add(shoppingItem+"\n"+expirationDate);
                 //                for (String value : list){
                 //                    Log.d("Items inside list", "Value is " + value);
                 //                }

@@ -113,7 +113,7 @@ public class ShoppingList extends AppCompatActivity{
             startActivity(intent);
         }
         final ListView listview;
-        final ArrayAdapter<String> adapter=new ArrayAdapter<>(this,android.R.layout.simple_dropdown_item_1line,list);
+        final ArrayAdapter<String> adapter=new ArrayAdapter<>(this,R.layout.mytextview,list);
 
         //adapter.notifyDataSetChanged();
 
@@ -268,7 +268,7 @@ public class ShoppingList extends AppCompatActivity{
                                             final Calendar cal = Calendar.getInstance();
                                             cal.clear();
                                             cal.set(Calendar.YEAR, year);
-                                            cal.set(Calendar.MONTH, month - 1);
+                                            cal.set(Calendar.MONTH, month);
                                             cal.set(Calendar.DATE, day);
 
 
