@@ -160,10 +160,10 @@ public class VirtuPage extends AppCompatActivity {
                         Log.d("timehash Day", Long.toString(timeHashMap.get("date")));
                         Log.d("timeHash Year", Long.toString(timeHashMap.get("year")));
                         Calendar itemCal = Calendar.getInstance();
-                        long tempmonth = timeHashMap.get("month") + 1;
+                        long tempmonth = timeHashMap.get("month") ;
                         long tempdate = timeHashMap.get("date");
                         long tempyear = timeHashMap.get("year");
-                        itemCal.getTime().setMonth((int)tempmonth + 1);
+                        itemCal.getTime().setMonth((int)tempmonth);
                         itemCal.getTime().setDate((int)tempdate);
                         itemCal.getTime().setYear((int)tempyear);
 
@@ -178,32 +178,56 @@ public class VirtuPage extends AppCompatActivity {
                         Log.d("Difference Days: ", Long.toString(tempdate - currdate));
                         Log.d("Difference Years: ", Long.toString(tempyear - curryear));
                         //currentCal.compareTo (itemCal)
-                        if(tempyear - curryear >= 0){
-                            //Not Expired
-                            Log.d("Not Expired Year", "True");
-                            if(tempmonth - currmonth < 0){
-                                //Expired
-                                Log.d("Expired Month", "True");
-                                Toast.makeText(VirtuPage.this, "Item " + key.child("Item Name").getValue(String.class) + " expired", Toast.LENGTH_SHORT).show();
+
+                        if(tempyear - curryear > 0){
+                            Log.d("Expired?", "No");
+                        }
+                        else if (tempyear - curryear == 0){
+                            if(tempmonth - currmonth > 0){
+
                             }
-                            else{
-                                //Not Expired
-                                if(tempdate - currdate <= 5 && tempdate - currdate > -1){
-                                    //Print Toast Message Warning
-                                    Log.d("Not Expired Date", "True");
+                            else if (tempmonth - currmonth == 0){
+                                if(tempdate - currdate < 5 && tempdate - currdate > 0){
                                     Toast.makeText(VirtuPage.this, "Item " + key.child("Item Name").getValue(String.class) + " is about to expire", Toast.LENGTH_SHORT).show();
                                 }
-                                else{
-                                    Log.d("Expired Date", "True");
+                                else if(tempdate - currdate <= 0){
                                     Toast.makeText(VirtuPage.this, "Item " + key.child("Item Name").getValue(String.class) + " expired", Toast.LENGTH_SHORT).show();
                                 }
-
+                            }
+                            else{
+                                Toast.makeText(VirtuPage.this, "Item " + key.child("Item Name").getValue(String.class) + " expired", Toast.LENGTH_SHORT).show();
                             }
                         }
                         else{
-                            //Expired
-                            Toast.makeText(VirtuPage.this, "Item " + key.child("Item Name").getValue(String.class) + " Expired", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(VirtuPage.this, "Item " + key.child("Item Name").getValue(String.class) + " expired", Toast.LENGTH_SHORT).show();
                         }
+
+
+//                        if(tempyear - curryear > 0){
+//                            //Not Expired
+//                            Log.d("Not Expired Year", "True");
+//                        }
+//                        else{
+//                            //Expired
+//                            if(tempmonth - currmonth > 0){
+//                                //Expired
+//                                Log.d("Expired Month", "False");
+//                            }
+//                            else{
+//                                //Not Expired
+//                                if(tempdate - currdate <= 5 && tempdate - currdate > -1){
+//                                    //Print Toast Message Warning
+//                                    Log.d("Not Expired Date", "True");
+//                                    Toast.makeText(VirtuPage.this, "Item " + key.child("Item Name").getValue(String.class) + " is about to expire", Toast.LENGTH_SHORT).show();
+//                                }
+//                                else{
+//                                    Log.d("Expired Date", "True");
+//                                    Toast.makeText(VirtuPage.this, "Item " + key.child("Item Name").getValue(String.class) + " expired", Toast.LENGTH_SHORT).show();
+//                                }
+//
+//                            }
+//
+//                        }
 //                        if(tempmonth == currentCal.getTime().getMonth()){
 //                            long dayDifference = tempdate - currentCal.getTime().getDate();
 //                            Log.d("# of Day Difference", Long.toString(dayDifference));
