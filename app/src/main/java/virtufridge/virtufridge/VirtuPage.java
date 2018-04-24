@@ -248,22 +248,26 @@ public class VirtuPage extends AppCompatActivity {
                 //                    return;
                 //                }
                 //DataSnapshot userDataSnapshot = dataSnapshot.child(finalCurrentUserId);
-                String key = dataSnapshot.getKey();
-                Log.d("Key Name", key);
-                Log.d("Item Name", dataSnapshot.child("Item Name").getValue(String.class));
-                String shoppingItem = dataSnapshot.child("Item Name").getValue(String.class);
-                HashMap<String, Long> timeHashMap = (HashMap)dataSnapshot.child("Expiration Date").getValue();
-                String month = Long.toString(timeHashMap.get("month")+1);
-                String day =  Long.toString(timeHashMap.get("date"));
-                String year =  Long.toString(timeHashMap.get("year")-100);
-                String expirationDate = month+"/"+day+"/"+year;
-                itemlist.add(shoppingItem+"\n"+expirationDate);
-                //                for (String value : list){
-                //                    Log.d("Items inside list", "Value is " + value);
-                //                }
-                keylist.add(dataSnapshot.getKey());
-                adapter.notifyDataSetChanged();
-                Log.d("Log 5","After adapter change");
+                Log.d("Final Data Key", dataSnapshot.getKey());
+                if(dataSnapshot.child("Expiration Date").getValue() != null){
+                    String key = dataSnapshot.getKey();
+                    Log.d("Key Name", key);
+                    Log.d("Item Name", dataSnapshot.child("Item Name").getValue(String.class));
+                    String shoppingItem = dataSnapshot.child("Item Name").getValue(String.class);
+                    HashMap<String, Long> timeHashMap = (HashMap)dataSnapshot.child("Expiration Date").getValue();
+                    String month = Long.toString(timeHashMap.get("month")+1);
+                    String day =  Long.toString(timeHashMap.get("date"));
+                    String year =  Long.toString(timeHashMap.get("year")-100);
+                    String expirationDate = month+"/"+day+"/"+year;
+                    itemlist.add(shoppingItem+"\n"+expirationDate);
+                    //                for (String value : list){
+                    //                    Log.d("Items inside list", "Value is " + value);
+                    //                }
+                    keylist.add(dataSnapshot.getKey());
+                    adapter.notifyDataSetChanged();
+                    Log.d("Log 5","After adapter change");
+                }
+
             }
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
