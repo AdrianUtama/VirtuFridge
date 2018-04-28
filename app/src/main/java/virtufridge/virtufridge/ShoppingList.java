@@ -106,7 +106,6 @@ public class ShoppingList extends AppCompatActivity{
         String currentUserId = "";
         if(currentUser != null){
             currentUserId = currentUser.getUid();
-            Log.d("Fucking Log In", currentUser.getUid());
         }
         else{
             Intent intent = new Intent(this, LoginPage.class);
@@ -127,16 +126,12 @@ public class ShoppingList extends AppCompatActivity{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child("NumberOfVisits").getValue() != null){
                     long totalTrips = (long) dataSnapshot.child("NumberOfVisits").getValue();
-                    Log.d("Number of Trips", Long.toString(totalTrips));
-                    Log.d("Inside this Recommender", "Recommendation");
                     for(DataSnapshot item : dataSnapshot.child("Item Freq").getChildren()){
-                        Log.d("Item Name Freq", item.getKey().toString());
-                        Log.d("Item Freq Purchase", item.getValue().toString());
                         long itemValue = (long)item.getValue();
-                        Log.d("Division", Float.toString(((float) itemValue/ totalTrips)));
+
 
                         if(((float) itemValue/ totalTrips) >= 0.5){
-                            Log.d("Item that worked", item.getKey().toString());
+
                             Toast.makeText(ShoppingList.this, "You should buy " + item.getKey(), Toast.LENGTH_SHORT).show();
                             recommendedItems.add(item.getKey());
 //                        formattedRecommendedItems = formattedRecommendedItems + item.getKey().toString() +  ", ";
@@ -231,12 +226,6 @@ public class ShoppingList extends AppCompatActivity{
 
                                 tv_date.setText(Integer.toString(month + 1)+"/"+Integer.toString(day)+"/"+Integer.toString(year));
 
-                                for(String item : list){
-                                    Log.d("ItemListItem:",item);
-                                }
-                                for(String item: tempItemList){
-                                    Log.d("tempItemListItem",item);
-                                }
                                 if(tempItemList.isEmpty()){
 
                                 }
@@ -251,18 +240,11 @@ public class ShoppingList extends AppCompatActivity{
                                             if(tempItemList.size() == 0){
                                                 alertDismissed = true;
                                                 alert.cancel();
-                                                Log.d("Alert dimissed", "Dismissed");
                                             }
                                             else{
-                                            Log.d("Button Click", "Button Clicked");
-
-
-                                            Log.d("TV Month:", Integer.toString(month));
-                                            Log.d("TV Day:", Integer.toString(day));
-                                            Log.d("TV Year:", Integer.toString(year));
                                             DatabaseReference root = FirebaseDatabase.getInstance().getReference().child(finalCurrentUserId3);
                                             DatabaseReference users = root.child("ShoppingList");
-                                            Log.d("TempItemList 0",tempItemList.get(0));
+
 
 
                                             final Calendar cal = Calendar.getInstance();
@@ -278,27 +260,16 @@ public class ShoppingList extends AppCompatActivity{
                                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                                     String keyValue = "";
                                                     for(DataSnapshot item: dataSnapshot.getChildren()) {
-                                                        Log.d("Test Sanity", item.getKey().toString());
+
                                                         if(item.child("Item Name").getValue(String.class).equals(tempItemList.get(0))){
                                                             keyValue = item.getKey();
                                                             break;
                                                         }
                                                         keyValue = item.getKey();
-//                                                        Log.d("Key Name", item.getKey());
-//                                                        Log.d("Value of Key Name", item.child("Item Name").getValue(String.class));
-//                                                        Log.d("TempItemListSize", Integer.toString(tempItemList.size()));
-//                                                        if(!tempItemList.isEmpty()){
-//                                                            Log.d("Inside this tempItem", "Really");
-//                                                            itemForExpiration.setText("Enter Expiration of Item: " + tempItemList.get(0));
-//                                                        }
                                                     }
                                                     if(tempItemList.size() != 0){
 
                                                         if(dataSnapshot.child(keyValue).child("Item Name").getValue(String.class).equals(tempItemList.get(0))){
-                                                            Log.d("Inside the dataChange", "True");
-                                                            //Add the expiration date to the database
-                                                            //myRef.child("ShoppingList").child(item.getKey()).child("Expiration Date").setValue(cal.getTime());
-                                                            Log.d("tempItemListSize", Integer.toString(tempItemList.size()));
                                                             myRef.child("VirtuFridge").child(keyValue).child("Item Name").setValue(tempItemList.get(0));
                                                             myRef.child("VirtuFridge").child(keyValue).child("Expiration Date").setValue(cal.getTime());
                                                             final String itemForFreq = tempItemList.get(0).toLowerCase();
@@ -310,9 +281,7 @@ public class ShoppingList extends AppCompatActivity{
                                                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                                                     boolean foundData = false;
                                                                     int count = 0;
-                                                                    Log.d("Item Freq Datasnapshot", dataSnapshot.getKey().toString());
                                                                     for (DataSnapshot item : dataSnapshot.getChildren()){
-                                                                        Log.d("Item Freq Key" ,item.getKey().toString());
                                                                         if(itemForFreq.equals(item.getKey().toString().toLowerCase())){
                                                                             foundData = true;
 
@@ -358,8 +327,6 @@ public class ShoppingList extends AppCompatActivity{
                                                                 usersVisit.addListenerForSingleValueEvent(new ValueEventListener() {
                                                                     @Override
                                                                     public void onDataChange(final DataSnapshot dataSnapshot) {
-                                                                        Log.d("Key DS userVisit", dataSnapshot.getKey());
-                                                                        Log.d("Inside rootVisit", "Not Null");
                                                                         if (dataSnapshot.child("NumberOfVisits").getValue() == null){
                                                                             myRef.child("NumberOfVisits").setValue(1);
                                                                         }
@@ -367,7 +334,6 @@ public class ShoppingList extends AppCompatActivity{
                                                                             freqCount = (long)dataSnapshot.child("NumberOfVisits").getValue();
                                                                             freqCount += 1;
                                                                             myRef.child("NumberOfVisits").setValue(freqCount);
-                                                                            Log.d("NumberOfVisits", "Not Null");
                                                                         }
                                                                     }
                                                                     @Override
@@ -376,9 +342,7 @@ public class ShoppingList extends AppCompatActivity{
                                                                     }
                                                                 });
 
-                                                                //myRef.child("NumberOfVisits").setValue(freqCount + 1);
                                                                 alert.cancel();
-                                                                Log.d("Alert dimissed", "Dismissed");
                                                             }
                                                         }
                                                     }
@@ -399,49 +363,9 @@ public class ShoppingList extends AppCompatActivity{
                                             if(alertDismissed == true){
 
                                             }
-                                            else{
-
-//                                                if(!tempItemList.isEmpty()){
-//                                                    itemForExpiration.setText("Enter Expiration of Item: " + tempItemList.get(0));
-//                                                }
-                                            }
 
 
-//                                            users.addListenerForSingleValueEvent(new ValueEventListener() {
-//                                                @Override
-//                                                public void onDataChange(DataSnapshot snapshot) {
-//                                                    Log.d("Inside onDataChange", "Inside onDataChange Expiration");
-//                                                    for(DataSnapshot key: snapshot.getChildren()){
-//                                                        Log.d("TIL.get(0)", tempItemList.get(0));
-//                                                        Log.d("Item Key",key.getKey().toString());
-//                                                        Log.d("Item",key.child("Item Name").getValue().toString());
-//                                                        itemKeyMap.put(key.getKey().toString(), key.child("Item Name").getValue().toString());
-//                                                        if (key.child("Item Name").getKey().toString().equals(tempItemList.get(0))){
-//                                                            Log.d("TempItemList 0:",tempItemList.get(0));
-//                                                            Calendar cal = Calendar.getInstance();
-//                                                            cal.clear();
-//
-//                                                            cal.set(Calendar.YEAR, year);
-//                                                            cal.set(Calendar.MONTH, month);
-//                                                            cal.set(Calendar.DATE, day);
-//                                                            myRef.child("ShoppingList").child(key.getKey()).child("Expiration Date").setValue(cal.getTime());
-//                                                        }
-//                                                    }
-////                                                    if (foundData) {
-////                                                        Toast.makeText(ShoppingList.this, "Item already exists", Toast.LENGTH_SHORT).show();
-////                                                    }else{
-////                                                        String key = myRef.child("ShoppingList").push().getKey();
-////                                                        myRef.child("ShoppingList").child(key).setValue(shoppingItem.getText().toString());
-////                                                        shoppingItem.getText().clear();
-////                                                        Toast.makeText(ShoppingList.this, "Item added to your list", Toast.LENGTH_SHORT).show();
-////
-////                                                    }
-//                                                }
-//                                                @Override
-//                                                public void onCancelled(DatabaseError databaseError) {
-//
-//                                                }
-//                                            });
+
 
                                         }
                                     });
@@ -473,15 +397,6 @@ public class ShoppingList extends AppCompatActivity{
                             @Override
                             public void onClick(View view) {
                                 alert.cancel();
-//                                DatabaseReference root = FirebaseDatabase.getInstance().getReference().child(finalCurrentUserId1);
-//                                root.child("AllItems").setValue(list);
-//                                DatabaseReference users = root.child("VirtuFridge");
-//                                Intent intent = new Intent(view.getContext(), VirtuPage.class);
-//                                for (int itemIndex = 0; itemIndex < keylist.size(); itemIndex++){
-//                                    users.child(keylist.get(itemIndex)).setValue(list.get(itemIndex));
-//                                }
-//                                //intent.putExtra("key", theString);
-//                                startActivity(intent);
                             }
                         });
                     }
@@ -512,18 +427,11 @@ public class ShoppingList extends AppCompatActivity{
                             //Check to see if item has already been added
                             DatabaseReference root = FirebaseDatabase.getInstance().getReference().child(finalCurrentUserId2);
                             DatabaseReference users = root;
-                            Log.d("Inside onClick", "Inside onClick");
                             users.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot snapshot) {
-//                                    Log.d("Entering Shit", "Entering the twilight zone");
-//                                    Log.d("Entering Shit", snapshot.getKey().toString());
-                                    //DataSnapshot userDataSnapshot = snapshot.child(finalCurrentUserId1);
-                                    Log.d("Inside Fab2", "True");
-                                    Log.d("snapshot value", snapshot.getKey().toString());
                                     Boolean foundData = false;
                                     for(DataSnapshot key: snapshot.child("ShoppingList").getChildren()){
-                                        Log.d("Getting fab2 Snapshot", key.getValue().toString());
                                         if(shoppingItem.getText().toString().equals(key.child("Item Name").getValue().toString())){
                                             foundData = true;
                                         }
@@ -532,8 +440,6 @@ public class ShoppingList extends AppCompatActivity{
                                         }
 
                                         for(DataSnapshot item: snapshot.child("VirtuFridge").getChildren()){
-                                            Log.d("Item Key Name", item.getKey().toString());
-                                            Log.d("Item Name", item.child("Item Name").getValue().toString());
                                             if(item.child("Item Name").getValue().equals(shoppingItem.getText().toString())){
                                                 foundData = true;
                                             }
@@ -584,22 +490,11 @@ public class ShoppingList extends AppCompatActivity{
         users.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                //DataSnapshot userDataSnapshot = dataSnapshot.child(finalCurrentUserId);
-//                if(s == null){
-//                    Log.d("Null Error", "The String for DataSnapshot is null");
-//                    return;
-//                }
-                //DataSnapshot userDataSnapshot = dataSnapshot.child(finalCurrentUserId);
                 String key = dataSnapshot.getKey();
-                Log.d("Key Value: ", key);
                 String shoppingItem = dataSnapshot.child("Item Name").getValue(String.class);
                 list.add(shoppingItem);
-//                for (String value : list){
-//                    Log.d("Items inside list", "Value is " + value);
-//                }
                 keylist.add(dataSnapshot.getKey());
                 adapter.notifyDataSetChanged();
-                Log.d("Log 5","After adapter change");
             }
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
